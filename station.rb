@@ -9,7 +9,9 @@ class Station
 
   @@stations = []
 
-  attr_reader :name, :trains
+  # attr_reader :name, :trains
+
+  attr_accessor_with_history :name, :trains
 
   validate :name, :presence
 
@@ -64,6 +66,3 @@ class Station
   #   raise ArgumentError, "Название станции не указано!" if @name.empty?
   # end
 end
-
-# station1 = Station.new("Fialka")
-# print station1.validate!

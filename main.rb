@@ -26,7 +26,7 @@ class Main
     number = gets.chomp # .to_i
     puts "Выберите тип поезда: passenger, cargo"
     type = gets.chomp
-    # raise StandardError, "Неправильный тип поезда" unless %w[cargo passenger].include?(type)
+    raise StandardError, "Неправильный тип поезда" unless %w[cargo passenger].include?(type)
 
     case type
     when "passenger"
@@ -38,11 +38,11 @@ class Main
     end
 
     puts "Создан поезд №#{number}, тип: #{type}"
-  # rescue ArgumentError => e
-  #   puts "Ошибка формата: #{e}"
-  #   retry
-    rescue StandardError => e
-      puts "Ошибка: #{e}"
+    # rescue ArgumentError => e
+    #   puts "Ошибка формата: #{e}"
+    #   retry
+  rescue StandardError => e
+    puts "Ошибка: #{e}"
   end
 
   def create_route

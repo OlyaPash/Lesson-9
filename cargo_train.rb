@@ -1,4 +1,7 @@
 class CargoTrain < Train
+  validate :number, :presence
+  validate :type, :presence
+
   def initialize(type = "cargo", number)
     @number = number
     @type = type

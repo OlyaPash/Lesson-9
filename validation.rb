@@ -14,7 +14,6 @@ module Validation
   end
 
   module InstanceMethods
-    
     def validate!
       self.class.validations.each do |validation|
         value = instance_variable_get("@#{validation[:attr_name]}")
@@ -29,7 +28,7 @@ module Validation
     end
 
     def validate_format(value, format)
-      raise "Значение не соответствует заданному формату!" if value.nil? || value !~ format
+      raise "Значение не соответствует заданному формату!" if value !~ format
     end
 
     def validate_type(value, type)
@@ -39,7 +38,7 @@ module Validation
     def valid?
       validate!
       true
-    rescue
+    rescue StandardError
       false
     end
   end
