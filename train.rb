@@ -21,7 +21,7 @@ class Train
 
   validate :number, :presence
   validate :number, :format, /(.|\d){3}-*(.|\d){2}/
-  validate :number, :type, Train # String
+  validate :number, :type, Train
   validate :type, :presence
 
   def initialize(number, type, speed = 0)
