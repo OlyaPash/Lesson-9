@@ -1,9 +1,14 @@
 require_relative 'company'
 require_relative 'instance_counter'
+require_relative 'validation'
+require_relative 'accessors'
 
 class Train
   include Company
   include InstanceCounter
+  include Validation
+  extend Accessors
+
   @@trains = []
 
   attr_accessor :speed, :number, :station, :route, :wagons, :type
@@ -13,6 +18,11 @@ class Train
   # и еще 2 буквы или цифры после дефиса
 
   NUMBER_FORMAT = /(.|\d){3}-*(.|\d){2}/
+
+  validate :number, :presence
+  validate :number, :format, /(.|\d){3}-*(.|\d){2}/
+  validate :number, :type, Train #String
+  validate :type, :presence
 
   def initialize(number, type, speed = 0)
     @speed = speed
@@ -87,23 +97,23 @@ class Train
     puts "Предыдущая - #{route.stations[@station_index - 1].name}" if @station_index.positive?
   end
 
-  def valid?
-    validate!
-    true
-  rescue ArgumentError
-    false
-  end
+  # def valid?
+  #   validate!
+  #   true
+  # rescue ArgumentError
+  #   false
+  # end
 
   def wagons_list
     @wagons.each_with_index { |wagon, _index| yield wagon }
   end
 
-  protected
+  # protected
 
-  def validate!
-    raise ArgumentError, "Номер поезда не указан!" if @number.empty?
-    raise ArgumentError, "Номер поезда должен быть в формате ххх-хх или ххххх!" if @number !~ NUMBER_FORMAT
-  end
+  # def validate!
+  #   raise ArgumentError, "Номер поезда не указан!" if @number.empty?
+  #   raise ArgumentError, "Номер поезда должен быть в формате ххх-хх или ххххх!" if @number !~ NUMBER_FORMAT
+  # end
 
   private # методы доступные классу
 
@@ -115,3 +125,6 @@ class Train
     self.speed = 0
   end
 end
+
+# train1 = Train.new("fox-22", "cargo")
+# print train1.validate!

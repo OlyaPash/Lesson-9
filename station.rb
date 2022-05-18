@@ -1,10 +1,17 @@
 require_relative 'instance_counter'
+require_relative 'validation'
+require_relative 'accessors'
 
 class Station
   include InstanceCounter
+  include Validation
+  extend Accessors
+
   @@stations = []
 
   attr_reader :name, :trains
+
+  validate :name, :presence
 
   def initialize(name)
     @name = name
@@ -40,20 +47,23 @@ class Station
     puts "Поезд №#{train.number} отправляется со станции #{name}"
   end
 
-  def valid?
-    validate!
-    true
-  rescue ArgumentError
-    false
-  end
+  # def valid?
+  #   validate!
+  #   true
+  # rescue ArgumentError
+  #   false
+  # end
 
   def block_trains(&block)
     @trains.each(&block)
   end
 
-  protected
+  # protected
 
-  def validate!
-    raise ArgumentError, "Название станции не указано!" if @name.empty?
-  end
+  # def validate!
+  #   raise ArgumentError, "Название станции не указано!" if @name.empty?
+  # end
 end
+
+# station1 = Station.new("Fialka")
+# print station1.validate!
