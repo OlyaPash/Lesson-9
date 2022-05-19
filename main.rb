@@ -16,9 +16,9 @@ class Main
     station = Station.new(st_name)
     @stations << station
     @stations.each { |el| puts el.name }
-    # rescue ArgumentError => e
-    #   puts "Ошибка: #{e}"
-    #   retry
+    rescue StandardError => e
+      puts "Ошибка: #{e}"
+      retry
   end
 
   def create_train
@@ -26,7 +26,7 @@ class Main
     number = gets.chomp # .to_i
     puts "Выберите тип поезда: passenger, cargo"
     type = gets.chomp
-    raise StandardError, "Неправильный тип поезда" unless %w[cargo passenger].include?(type)
+    raise ArgumentError, "Неправильный тип поезда" unless %w[cargo passenger].include?(type)
 
     case type
     when "passenger"
@@ -38,11 +38,11 @@ class Main
     end
 
     puts "Создан поезд №#{number}, тип: #{type}"
-    # rescue ArgumentError => e
-    #   puts "Ошибка формата: #{e}"
-    #   retry
-  rescue StandardError => e
-    puts "Ошибка: #{e}"
+    rescue StandardError => e
+      puts "Ошибка: #{e}"
+      retry
+    rescue ArgumentError => e
+      puts "Ошибка: #{e}"
   end
 
   def create_route
