@@ -1,6 +1,8 @@
 class CargoTrain < Train
+  
   validate :number, :presence
   validate :type, :presence
+  validate :number, :format, /(.|\d){3}-*(.|\d){2}/
 
   def initialize(type = "cargo", number)
     @number = number
